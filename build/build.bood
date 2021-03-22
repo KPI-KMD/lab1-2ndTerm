@@ -1,10 +1,14 @@
-go_binary {
+go_tested_binary {
   // Module (and output) name.
-  name: "bood",
+  name: "myBood",
 
   // Go package to build.
-  pkg: "github.com/roman-mazur/design-practice-1-template/build/cmd/bood",
+  pkg: "github.com/KPI-KMD/lab1-2ndTerm/build/cmd/bood",
 
   // Build inputs.
-  srcs: ["**/*.go", "../go.mod"]
+  srcs: ["**/*.go", "../go.mod"],
+
+  testPkg: "github.com/KPI-KMD/lab1-2ndTerm/build/gomodule",
+
+  testSrcs: ["**/*_test.go"]
 }
