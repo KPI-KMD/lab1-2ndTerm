@@ -15,3 +15,5 @@ Team:
 </br>![Imgur](https://i.imgur.com/rPB9dt7.jpg)</br>
 4. Unzipped archive
 </br>![Imgur](https://i.imgur.com/MpI2fMx.jpg)</br>
+5. Release
+</br>![Imgur](https://i.imgur.com/zxndTAW.jpg)</br>
