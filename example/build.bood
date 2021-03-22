@@ -1,0 +1,14 @@
+go_tested_binary {
+  // Module (and output) name.
+  name: "hello",
+
+  // Go package to build.
+  pkg: "github.com/KPI-KMD/lab1-2ndTerm/example",
+
+  // Build inputs.
+  srcs: ["**/*.go", "../go.mod"],
+
+  testPkg: "github.com/KPI-KMD/lab1-2ndTerm/example/task1",
+
+  testSrcs: ["**/*_test.go"]
+}

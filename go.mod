@@ -1,4 +1,4 @@
-module github.com/roman-mazur/design-practice-1-template
+module github.com/KPI-KMD/lab1-2ndTerm
 
 go 1.15
 
