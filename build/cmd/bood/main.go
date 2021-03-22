@@ -20,6 +20,7 @@ var (
 func NewContext() *blueprint.Context {
 	ctx := bood.PrepareContext()
 	ctx.RegisterModuleType("go_tested_binary", gomodule.TestBinFactory)
+	ctx.RegisterModuleType("archive_bin", gomodule.ArchiveBinFactory)
 	return ctx
 }
 

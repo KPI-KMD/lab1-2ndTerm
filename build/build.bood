@@ -12,3 +12,8 @@ go_tested_binary {
 
   testSrcs: ["**/*_test.go"]
 }
+
+archive_bin {
+    name: "task2",
+    binary: "myBood"
+}
