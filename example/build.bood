@@ -15,5 +15,5 @@ go_tested_binary {
 
 archive_bin {
     name: "archive",
-    binary: "hello"
+    toBinary: "hello"
 }

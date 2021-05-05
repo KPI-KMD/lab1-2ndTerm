@@ -2,26 +2,35 @@ package gomodule
 
 import (
 	"bytes"
-	"strings"
-	"testing"
-
 	"github.com/google/blueprint"
 	"github.com/roman-mazur/bood"
+	"strings"
+	"testing"
 )
 
-func TestArchiveBinFactory(t *testing.T) {
+func TestSimpleArchiveFactory(t *testing.T) {
 	ctx := blueprint.NewContext()
 
 	ctx.MockFileSystem(map[string][]byte{
 		"Blueprints": []byte(`
+			go_tested_binary {
+			  name: "test-out",
+			  srcs: ["test-src.go"],
+              testPkg: "./...",
+              testSrcs: ["**/*_test.go"],
+			  pkg: ".",
+	          vendorFirst: true
+			}
 			archive_bin {
-				name: "test-archive",
-				binary: "test-out"
+			  name: "archiver",
+              toBinary: "test-out"
 			}
 		`),
-		"out/archiveBin.dd": nil,
+		"test-src.go": nil,
+		"test-src_test.go": nil,
 	})
 
+	ctx.RegisterModuleType("go_tested_binary", TestBinFactory)
 	ctx.RegisterModuleType("archive_bin", ArchiveBinFactory)
 
 	cfg := bood.NewConfig()
@@ -42,11 +51,25 @@ func TestArchiveBinFactory(t *testing.T) {
 	} else {
 		text := buffer.String()
 		t.Logf("Gennerated ninja build file:\n%s", text)
-		if !strings.Contains(text, "out/archives/test-archive:") {
-			t.Errorf("Generated ninja file does not have build of the archive module")
-		}
-		if !strings.Contains(text, "out/bin/test-out") {
+
+		if !strings.Contains(text, "out/bin/test-out: ") {
 			t.Errorf("Generated ninja file does not have build of the test module")
+		}
+
+		if !strings.Contains(text, " test-src_test.go") {
+			t.Errorf("Generated ninja file does not have test file")
+		}
+
+		if !strings.Contains(text, " out/archive/") {
+			t.Errorf("Generated ninja file does not have archive file")
+		}
+
+		if !strings.Contains(text, " test-src.go") {
+			t.Errorf("Generated ninja file does not have source dependency")
+		}
+
+		if !strings.Contains(text, "build vendor: g.gomodule.vendor | go.mod") {
+			t.Errorf("Generated ninja file does not have vendor build rule")
 		}
 	}
 }
